@@ -16,7 +16,9 @@ import androidx.core.view.WindowInsetsCompat;
 public class MainActivity extends AppCompatActivity {
 
     Button btn01, btn02, btn03, btn04, btn05, btn06, btn07, btn08, btn09, btn00, btnBorrar;
-    RadioButton rbt01, rbt02, rbt03, rbt04, rbt05, rbt06;
+
+    RadioButton rbt01,rbt02,rbt03,rbt04,rbt05,rbt06;
+
     StringBuilder clave;
     int contador;
 
@@ -46,7 +48,6 @@ public class MainActivity extends AppCompatActivity {
         btn00 = findViewById(R.id.btn00);
         btnBorrar = findViewById(R.id.btnBorrar);
 
-        // Asignar un OnClickListener para cada botón
         btn01.setOnClickListener(onClickListener);
         btn02.setOnClickListener(onClickListener);
         btn03.setOnClickListener(onClickListener);
@@ -58,40 +59,91 @@ public class MainActivity extends AppCompatActivity {
         btn09.setOnClickListener(onClickListener);
         btn00.setOnClickListener(onClickListener);
 
-    }
+        rbt01 = findViewById(R.id.rbt01);
+        rbt02 = findViewById(R.id.rbt02);
+        rbt03 = findViewById(R.id.rbt03);
+        rbt04 = findViewById(R.id.rbt04);
+        rbt05 = findViewById(R.id.rbt05);
+        rbt06 = findViewById(R.id.rbt06);
 
-    // OnClickListener común para todos los botones
+
+        btnBorrar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (clave.length() > 0) {
+                    clave.deleteCharAt(clave.length() - 1);
+
+                    contador--;
+
+                    switch (contador) {
+                        case 0:
+                            rbt01.setChecked(false);
+                            break;
+                        case 1:
+                            rbt02.setChecked(false);
+                            break;
+                        case 2:
+                            rbt03.setChecked(false);
+                            break;
+                        case 3:
+                            rbt04.setChecked(false);
+                            break;
+                        case 4:
+                            rbt05.setChecked(false);
+                            break;
+                        case 5:
+                            rbt06.setChecked(false);
+                            break;
+                    }
+                }
+            }
+        });
+
+
+
+
+
+    }
     private View.OnClickListener onClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             Button btn = (Button) v;
             String numero = btn.getText().toString();
-            clave.append(numero); // Agregar el número pulsado a la variable
+            clave.append(numero);
             contador++;
-            if (contador == 6) { // Si se han pulsado seis números
-                mostrarClave();
-                clave.setLength(0); // Limpiar la clave
-                contador = 0; // Reiniciar contador
+
+
+            switch (contador) {
+                case 1:
+                    rbt01.setChecked(true);
+                    break;
+                case 2:
+                    rbt02.setChecked(true);
+                    break;
+                case 3:
+                    rbt03.setChecked(true);
+                    break;
+                case 4:
+                    rbt04.setChecked(true);
+                    break;
+                case 5:
+                    rbt05.setChecked(true);
+                    break;
+                case 6:
+                    rbt06.setChecked(true);
+                    mostrarClave();
+                    break;
             }
         }
     };
+
+
+
+
+
 
     // Método para mostrar la clave con un Toast
     private void mostrarClave() {
         Toast.makeText(getApplicationContext(), "La clave es: " + clave.toString(), Toast.LENGTH_LONG).show();
     }
-
-    public void mensajeAlert(String msg){
-        AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
-        alertDialog.setMessage(msg);
-        alertDialog.setCancelable(true);
-        alertDialog.show();
-    }
-
-    void mensajeToast(String mensaje){
-        Toast toast1 =  Toast.makeText(getApplicationContext(),mensaje, Toast.LENGTH_SHORT);
-        toast1.show();
-    }
-
-
 }
